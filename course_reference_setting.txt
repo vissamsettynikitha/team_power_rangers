@@ -1,15 +1,15 @@
-56 76
+67 44
 AEC108
 General Aptitude
-R.S.Aggarwal
+R.Aggarwal
 For MBA,MAT,CAT
 25 19
 CSE203
 Discrete Mathematics
 Krithivasan
 Applications
-12 56
-CSE204
-Algorithms Unlocked
-Thomas
-About algorithms
+35 90
+CSE207
+Digital Electronics
+S.Chand
+Principles
