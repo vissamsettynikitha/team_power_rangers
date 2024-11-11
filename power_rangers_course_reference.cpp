@@ -178,106 +178,83 @@ void power_rangers_course_reference_delete() {
 	else cout<<"Course Reference with ID "<<id<<" not found!"<<endl; 
 }
 
-void power_rangers_course_reference_linear_search_by_ref_code() {
-	string id;
-	cout<<"Enter Course Reference Code to search: ";
-	cin.ignore();
-	getline(cin,id);
-	for(int i = 0;i < course_references.size();i++) {
-		if(course_references[i].cour_ref_code == id) {
-			cout<<"ID : "<< course_references[i].id << endl;
-			cout<<"Course ID : "<< course_references[i].cour_id << endl;
-			cout<<"Course Reference Code : "<< course_references[i].cour_ref_code << endl;
-			cout<<"Book Title : "<< course_references[i].book_title << endl;
-			cout<<"Book Author : "<< course_references[i].book_author << endl;
-			cout<<"Book Details : "<< course_references[i].book_details << endl;
-			return;
-		}
-	}
-	cout<<"Course Reference with "<<id<<" not found!"<<endl;
-}
-
-void power_rangers_course_reference_insertion_sort_by_ref_code() {
-	for(int i = 1;i < course_references.size();i++) {
-		Course_Reference temp = course_references[i];
-		int j = i-1;
-		while(j >= 0 && course_references[j].cour_ref_code > temp.cour_ref_code) {
-			course_references[j+1] = course_references[j];
-			j--;
-		}
-		course_references[j+1] = temp;
-	}
-	cout<<"Course References sorted by Course Reference Code."<<endl;
-	power_rangers_course_reference_storing();
-	power_rangers_course_reference_retrieve();
-}
-
-void power_rangers_course_reference_compare_sorting_selection_sort() {
-    for (int i = 0; i < course_references.size() - 1; i++) {
-        int minIndex = i;
-        for (int j = i + 1; j < course_references.size(); j++) {
-            if (course_references[j].cour_ref_code < course_references[minIndex].cour_ref_code) {
-                minIndex = j;
-            }
+void power_rangers_course_reference_insertion_sort() {
+    int sort_by;
+    cout << "Sort Course References by:\n";
+    cout << "1. Course ID\n";
+    cout << "2. Course Reference Code\n";
+    cout << "3. Book Title\n";
+    cout << "Enter your choice (1/2/3): ";
+    cin >> sort_by;
+    cout<<"Sorted using Insertion Sort: "<<endl;
+    for (int i = 1; i < course_references.size(); i++) {
+        Course_Reference temp = course_references[i];
+        int j = i - 1;
+        
+        while (j >= 0 && 
+               ((sort_by == 1 && course_references[j].cour_id > temp.cour_id) ||
+                (sort_by == 2 && course_references[j].cour_ref_code > temp.cour_ref_code) ||
+                (sort_by == 3 && course_references[j].book_title > temp.book_title))) {
+            course_references[j + 1] = course_references[j];
+            j--;
         }
-        // Swap the found minimum element with the first element
-        if (minIndex != i) {
-            swap(course_references[i], course_references[minIndex]);
-        }
+        course_references[j + 1] = temp;
     }
-    cout << "Course References sorted by Course Reference Code using Selection Sort." << endl;
+    
+    if (sort_by == 1) {
+        cout << "Course References sorted by ID." << endl;
+    } else if (sort_by == 2) {
+        cout << "Course References sorted by Course ID." << endl;
+    } else if (sort_by == 3) {
+        cout << "Course References sorted by Book Title." << endl;
+    } else {
+        cout << "Invalid Choice." << endl;
+        return;
+    }
+
     power_rangers_course_reference_storing();
     power_rangers_course_reference_retrieve();
 }
 
-void power_rangers_course_reference_compare_search_binary_search() {
-//    power_rangers_course_reference_insertion_sort_by_ref_code();
+void power_rangers_course_reference_compare_sorting_selection_sort() {
+    int sort_by;
+    cout << "Sort Course References by:\n";
+    cout << "1. Course ID\n";
+    cout << "2. Course Reference Code\n";
+    cout << "3. Book Title\n";
+    cout << "Enter your choice (1/2/3): ";
+    cin >> sort_by;
+    cout<<"Sorted using Insertion Sort: "<<endl;
+    
     for (int i = 0; i < course_references.size() - 1; i++) {
         int minIndex = i;
         for (int j = i + 1; j < course_references.size(); j++) {
-            if (course_references[j].cour_ref_code < course_references[minIndex].cour_ref_code) {
+            if ((sort_by == 1 && course_references[j].cour_id < course_references[minIndex].cour_id) ||
+                (sort_by == 2 && course_references[j].cour_ref_code < course_references[minIndex].cour_ref_code) ||
+                (sort_by == 3 && course_references[j].book_title < course_references[minIndex].book_title)) {
                 minIndex = j;
             }
         }
-        // Swap the found minimum element with the first element
+        
         if (minIndex != i) {
             swap(course_references[i], course_references[minIndex]);
         }
     }
-    string search_code;
-    cout << "Enter Course Reference Code to search: ";
-    cin.ignore();
-    getline(cin, search_code);
-
-    int left = 0;
-    int right = course_references.size() - 1;
-    bool found = false;
-
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-
-        if (course_references[mid].cour_ref_code == search_code) {
-            // Display the found course reference
-            cout << "ID : " << course_references[mid].id << endl;
-            cout << "Course ID : " << course_references[mid].cour_id << endl;
-            cout << "Course Reference Code : " << course_references[mid].cour_ref_code << endl;
-            cout << "Book Title : " << course_references[mid].book_title << endl;
-            cout << "Book Author : " << course_references[mid].book_author << endl;
-            cout << "Book Details : " << course_references[mid].book_details << endl;
-            found = true;
-            break;
-        } 
-        else if (course_references[mid].cour_ref_code < search_code) {
-            left = mid + 1;
-        } 
-        else {
-            right = mid - 1;
-        }
+    
+    if (sort_by == 1) {
+        cout << "Course References sorted by ID." << endl;
+    } else if (sort_by == 2) {
+        cout << "Course References sorted by Course ID." << endl;
+    } else if (sort_by == 3) {
+        cout << "Course References sorted by Book Title." << endl;
+    } else {
+        cout << "Invalid Choice." << endl;
+        return;
     }
 
-    if (!found) {
-        cout << "Course Reference with code " << search_code << " not found!" << endl;
-    }
+
+    power_rangers_course_reference_storing();
+    power_rangers_course_reference_retrieve();
 }
 
 void power_rangers_course_reference_insertion_sort_details(){
@@ -298,6 +275,209 @@ void power_rangers_course_reference_linear_search_details(){
     cout<<"return -1 " ;
 
 }
+
+void power_rangers_course_reference_linear_search() {
+    int choice;
+    cout << "Choose attribute to search by:\n";
+    cout << "1) Course ID\n";
+    cout << "2) Course Reference Code\n";
+    cout << "3) Book Title\n";
+    cout << "Enter your choice: ";
+    cin >> choice;
+    cin.ignore();
+    bool found = false;
+    
+    switch (choice) {
+        case 1: {
+            int search_cour_id;
+            cout << "Enter Course ID to search: ";
+            cin >> search_cour_id;
+            for (int i = 0; i < course_references.size(); i++) {
+                if (course_references[i].cour_id == search_cour_id) {
+                    cout << "ID : " << course_references[i].id << endl;
+                    cout << "Course ID : " << course_references[i].cour_id << endl;
+                    cout << "Course Reference Code : " << course_references[i].cour_ref_code << endl;
+                    cout << "Book Title : " << course_references[i].book_title << endl;
+                    cout << "Book Author : " << course_references[i].book_author << endl;
+                    cout << "Book Details : " << course_references[i].book_details << endl;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) cout << "Course Reference with Course ID " << search_cour_id << " not found!" << endl;
+            break;
+        }
+        case 2: {
+            string search_ref_code;
+            cout << "Enter Course Reference Code to search: ";
+            getline(cin, search_ref_code);
+            for (int i = 0; i < course_references.size(); i++) {
+                if (course_references[i].cour_ref_code == search_ref_code) {
+                    cout << "ID : " << course_references[i].id << endl;
+                    cout << "Course ID : " << course_references[i].cour_id << endl;
+                    cout << "Course Reference Code : " << course_references[i].cour_ref_code << endl;
+                    cout << "Book Title : " << course_references[i].book_title << endl;
+                    cout << "Book Author : " << course_references[i].book_author << endl;
+                    cout << "Book Details : " << course_references[i].book_details << endl;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) cout << "Course Reference with Code " << search_ref_code << " not found!" << endl;
+            break;
+        }
+        case 3: {
+            string search_title;
+            cout << "Enter Book Title to search: ";
+            getline(cin, search_title);
+            for (int i = 0; i < course_references.size(); i++) {
+                if (course_references[i].book_title == search_title) {
+                    cout << "ID : " << course_references[i].id << endl;
+                    cout << "Course ID : " << course_references[i].cour_id << endl;
+                    cout << "Course Reference Code : " << course_references[i].cour_ref_code << endl;
+                    cout << "Book Title : " << course_references[i].book_title << endl;
+                    cout << "Book Author : " << course_references[i].book_author << endl;
+                    cout << "Book Details : " << course_references[i].book_details << endl;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) cout << "Course Reference with Book Title \"" << search_title << "\" not found!" << endl;
+            break;
+        }
+        default:
+            cout << "Invalid choice!" << endl;
+            break;
+    }
+}
+
+void power_rangers_course_reference_compare_search_binary_search() {
+    int choice;
+    cout << "Choose attribute to search by:\n";
+    cout << "1) Course ID\n";
+    cout << "2) Course Reference Code\n";
+    cout << "3) Book Title\n";
+    cout << "Enter your choice: ";
+    cin >> choice;
+    cin.ignore();
+    bool found = false;
+
+    switch (choice) {
+        case 1: {  
+            for (int i = 1; i < course_references.size(); i++) {
+                Course_Reference temp = course_references[i];
+                int j = i - 1;
+                while (j >= 0 && course_references[j].cour_id > temp.cour_id) {
+                    course_references[j + 1] = course_references[j];
+                    j--;
+                }
+                course_references[j + 1] = temp;
+            }
+
+            int search_id;
+            cout << "Enter Course ID to search: ";
+            cin >> search_id;
+            int left = 0, right = course_references.size() - 1;
+            while (left <= right) {
+                int mid = left + (right - left) / 2;
+                if (course_references[mid].cour_id == search_id) {
+                    cout << "ID: " << course_references[mid].id << endl;
+                    cout << "Course ID: " << course_references[mid].cour_id << endl;
+                    cout << "Course Reference Code: " << course_references[mid].cour_ref_code << endl;
+                    cout << "Book Title: " << course_references[mid].book_title << endl;
+                    cout << "Book Author: " << course_references[mid].book_author << endl;
+                    cout << "Book Details: " << course_references[mid].book_details << endl;
+                    found = true;
+                    break;
+                } else if (course_references[mid].cour_id < search_id) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+            break;
+        }
+
+        case 2: {  
+            for (int i = 1; i < course_references.size(); i++) {
+                Course_Reference temp = course_references[i];
+                int j = i - 1;
+                while (j >= 0 && course_references[j].cour_ref_code > temp.cour_ref_code) {
+                    course_references[j + 1] = course_references[j];
+                    j--;
+                }
+                course_references[j + 1] = temp;
+            }
+
+            string search_code;
+            cout << "Enter Course Reference Code to search: ";
+            getline(cin, search_code);
+            int left = 0, right = course_references.size() - 1;
+            while (left <= right) {
+                int mid = left + (right - left) / 2;
+                if (course_references[mid].cour_ref_code == search_code) {
+                    cout << "ID: " << course_references[mid].id << endl;
+                    cout << "Course ID: " << course_references[mid].cour_id << endl;
+                    cout << "Course Reference Code: " << course_references[mid].cour_ref_code << endl;
+                    cout << "Book Title: " << course_references[mid].book_title << endl;
+                    cout << "Book Author: " << course_references[mid].book_author << endl;
+                    cout << "Book Details: " << course_references[mid].book_details << endl;
+                    found = true;
+                    break;
+                } else if (course_references[mid].cour_ref_code < search_code) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+            break;
+        }
+
+        case 3: {  
+            for (int i = 1; i < course_references.size(); i++) {
+                Course_Reference temp = course_references[i];
+                int j = i - 1;
+                while (j >= 0 && course_references[j].book_title > temp.book_title) {
+                    course_references[j + 1] = course_references[j];
+                    j--;
+                }
+                course_references[j + 1] = temp;
+            }
+
+            string search_title;
+            cout << "Enter Book Title to search: ";
+            getline(cin, search_title);
+            int left = 0, right = course_references.size() - 1;
+            while (left <= right) {
+                int mid = left + (right - left) / 2;
+                if (course_references[mid].book_title == search_title) {
+                    cout << "ID: " << course_references[mid].id << endl;
+                    cout << "Course ID: " << course_references[mid].cour_id << endl;
+                    cout << "Course Reference Code: " << course_references[mid].cour_ref_code << endl;
+                    cout << "Book Title: " << course_references[mid].book_title << endl;
+                    cout << "Book Author: " << course_references[mid].book_author << endl;
+                    cout << "Book Details: " << course_references[mid].book_details << endl;
+                    found = true;
+                    break;
+                } else if (course_references[mid].book_title < search_title) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+            break;
+        }
+
+        default:
+            cout << "Invalid choice!" << endl;
+            return;
+    }
+
+    if (!found) {
+        cout << "Course Reference not found with the specified attribute!" << endl;
+    }
+}
+
 int main() {
 	load_from_file();
 	int choice;
@@ -320,10 +500,10 @@ int main() {
 			 	power_rangers_course_reference_delete();
 				break;
 			case 5:
-			 	power_rangers_course_reference_linear_search_by_ref_code();
+			 	power_rangers_course_reference_linear_search();
 				break;
 			case 6:
-			 	power_rangers_course_reference_insertion_sort_by_ref_code();
+			 	power_rangers_course_reference_insertion_sort();
 				break;
 			case 7:
 				power_rangers_course_reference_complexity_search();
@@ -343,11 +523,11 @@ int main() {
             case 12:
             	power_rangers_course_reference_insertion_sort_details();
             	break;
-			case 13:
-				exit(0);
-			default:
-				cout<<"Invalid Choice\n";
-		}
+	    case 13:  
+		exit(0);
+	    default:
+		cout<<"Invalid Choice\n";
+	}
 	}
 	return 0;
 }
