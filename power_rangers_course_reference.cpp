@@ -224,7 +224,7 @@ void power_rangers_course_reference_compare_sorting_selection_sort() {
     cout << "3. Book Title\n";
     cout << "Enter your choice (1/2/3): ";
     cin >> sort_by;
-    cout<<"Sorted using Insertion Sort: "<<endl;
+    cout<<"Sorted using Selection Sort: "<<endl;
     
     for (int i = 0; i < course_references.size() - 1; i++) {
         int minIndex = i;
